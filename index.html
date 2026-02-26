@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Inline script to prevent FOUC (Flash of Unstyled Content) -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('themePreference');
+            if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1><i class="fas fa-layer-group"></i> Dashboard</h1>
+            <div class="header-actions">
+                <div class="theme-picker">
+                    <select id="themeSelect" class="btn btn-secondary" aria-label="Select Theme">
+                        <option value="system">System</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+                <button id="addCatBtn" class="btn btn-secondary">
+                    <i class="fas fa-folder-plus"></i> New Category
+                </button>
+                <button id="addLinkBtn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> New Link
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-main" id="dashboard">
+        <!-- Categories and links will be injected here by JS -->
+    </main>
+
+    <!-- Modals -->
+    <!-- Category Modal -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="categoryModalTitle">Add Category</h2>
+                <button class="close-btn" data-modal="categoryModal">&times;</button>
+            </div>
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+                <div class="form-group">
+                    <label for="categoryName">Name</label>
+                    <input type="text" id="categoryName" required placeholder="e.g., Work, Social, Learning">
+                </div>
+                <!-- Optional color picking or icon picking could go here, keeping minimal for now -->
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-text cancel-btn" data-modal="categoryModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Link Modal -->
+    <div id="linkModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="linkModalTitle">Add Link</h2>
+                <button class="close-btn" data-modal="linkModal">&times;</button>
+            </div>
+            <form id="linkForm">
+                <input type="hidden" id="linkId">
+                <input type="hidden" id="linkOriginalCatId">
+                <div class="form-group">
+                    <label for="linkName">Name</label>
+                    <input type="text" id="linkName" required placeholder="e.g., GitHub">
+                </div>
+                <div class="form-group">
+                    <label for="linkUrl">URL</label>
+                    <input type="url" id="linkUrl" required placeholder="https://github.com">
+                </div>
+                <div class="form-group">
+                    <label for="linkCategory">Category</label>
+                    <select id="linkCategory" required>
+                        <!-- Options populated by JS -->
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-text cancel-btn" data-modal="linkModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
